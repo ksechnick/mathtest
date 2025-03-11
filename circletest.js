@@ -97,7 +97,7 @@ function fminsearch(fun, Parm0, x, y, Opt) { // fun = function(x,Parm)
 	return regModel
 };
 
-function fminsearch2(fun, Parm0, points, Opt) { // fun = function(x,Parm)
+export function fminsearch2(fun, Parm0, points, Opt) { // fun = function(x,Parm)
 	function debug(x) {
 		if (Opt.loglevel == 'debug') {
 			console.log(x);
@@ -206,7 +206,7 @@ function fminsearch2(fun, Parm0, points, Opt) { // fun = function(x,Parm)
 
 let x = [1, 2, 3, 4];
 let y = [1, 2, 2, 1];
-const combine = function (x, y) {
+export const combine = function (x, y) {
 	z = [];
 	for (let i = 0; i < x.length; i++) {
 		z[i] = [x[i], y[i]]
@@ -245,7 +245,3 @@ let Parms4 = fminsearch2(fun2, [50, 50, 49], hline, {
 //console.log(Parms);
 console.log(Parms4);
 //
-export {
-	combine,
-	fminsearch2
-}
