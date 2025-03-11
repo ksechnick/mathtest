@@ -233,11 +233,11 @@ let fun2 = function (points, P) {
 //let Parms2=fminsearch2(fun2,[1,1,5],z, {maxIter:600});
 x = [2, 2, 2, 2, 2];
 y = [1, 2, 3, 4, 100];
-vline = combine(x, y);
+let vline = combine(x, y);
 //let Parms3=fminsearch2(fun2,[1,1,5],vline, {maxIter:100});
 x = [1, 2, 3, 4, 33, 66, 90, 100];
 y = [2, 2, 2, 2, 2, 2, 2, 2];
-hline = combine(x, y);
+let hline = combine(x, y);
 let Parms4 = fminsearch2(fun2, [50, 50, 49], hline, {
 	maxIter: 100,
 	loglevel: "norm"
