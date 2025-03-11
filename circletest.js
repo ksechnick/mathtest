@@ -207,7 +207,7 @@ export function fminsearch2(fun, Parm0, points, Opt) { // fun = function(x,Parm)
 let x = [1, 2, 3, 4];
 let y = [1, 2, 2, 1];
 export const combine = function (x, y) {
-	z = [];
+	let z = [];
 	for (let i = 0; i < x.length; i++) {
 		z[i] = [x[i], y[i]]
 	};
