@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
+
 <body>
-<h1>Circular curve fitting</h1>
+    <h1>Circular curve fitting</h1>
 
-<p>combine two arrays array:</p>
+    <p>combine two arrays array:</p>
 
-<p id="demo"></p>
+    <p id="demo"></p>
 
 
-<!--<script src="https://raw.githubusercontent.com/ksechnick/mathtest/refs/heads/master/circletest.js"></script>--> 
+    <!--<script src="https://raw.githubusercontent.com/ksechnick/mathtest/refs/heads/master/circletest.js"></script>-->
 
-<script>
-import {combine} from "https://raw.githubusercontent.com/ksechnick/mathtest/refs/heads/master/circletest.js";
-let x = [1,2,3,4];
-let y = [1,2,2,1];
-let z = combine(x,y);
+    <script type="module">
+        import combine from "./circletest.js";
+        let x = [1,2,3,4];
+        let y = [1,2,2,1];
+        let z = combine(x,y);
 
-document.getElementById("demo").innerHTML = "The combined array is " + z;
+        document.getElementById("demo").innerHTML = "The combined array is " + z;
 
-function myFunction(total, value, index, array) {
-  return total + value;
-}
-</script>
+        function myFunction(total, value, index, array) {
+        return total + value;
+        }
+    </script>
 
 </body>
+
 </html>
