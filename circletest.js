@@ -171,3 +171,4 @@ let Parms4=fminsearch2(fun2,[50,50,49],hline, {maxIter:100,loglevel:"norm"});
 //console.log(Parms);
 console.log(Parms4);
 //
+export {combine, fminsearch2}
