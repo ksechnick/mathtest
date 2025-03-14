@@ -31,6 +31,9 @@
     <label for="x_array">X:</label><input id="x_array" name="x_array">
     <label for="y_array">Y:</label><input id="y_array" name="y_array">
     <button onclick="doIt()">Combine</button>
+    <button
+        onclick='document.getElementById("demo").innerHTML="The combined array is " +
+        combine(JSON.parse("["+document.getElementById("x_array").value+"]"),JSON.parse("["+document.getElementById("y_array").value+"]"))'>Combine2</button>
 
 
     <p id="demo"></p>
