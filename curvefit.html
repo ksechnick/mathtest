@@ -29,12 +29,17 @@
     <p>combine two arrays array:</p>
 
     <label for="x_array">X:</label><input id="x_array" name="x_array">
-    <label for="y_array">Y:</label><input id="y_array" name="y_array">
+    <label for="y_array">Y:</label><input id="y_array" name="y_array"><br>
     <button onclick="doIt()">Combine</button>
     <button
         onclick='document.getElementById("demo").innerHTML="The combined array is " +
         combine(JSON.parse("["+document.getElementById("x_array").value+"]"),JSON.parse("["+document.getElementById("y_array").value+"]"))'>Combine2</button>
-
+    <button onclick="doIt">Combine3</button>
+    <button
+        onclick='{document.getElementById("demo").innerHTML="The combined array is " +
+        combine(JSON.parse("["+document.getElementById("x_array").value+"]"),JSON.parse("["+document.getElementById("y_array").value+"]"))}'>Combine4</button>
+    <button onclick={doIt}>Combine5</button>
+    <button onclick={doIt()}>Combine6</button>
 
     <p id="demo"></p>
 
