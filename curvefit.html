@@ -13,21 +13,23 @@
 
     <label for="x_array">X:</label><input id="x_array" name="x_array">
     <label for="y_array">Y:</label><input id="y_array" name="y_array">
+    <button onclick="">Combine</button>
 
 
     <p id="demo"></p>
-
-
 
     <script type="module">
         import {combine} from "./circletest.js";
         //let x = [1,2,3,4];
         //let y = [1,2,2,1];
-        let x = JSON.parse("["+document.getElementById("x_array").value+"]");
-        let y = JSON.parse("["+document.getElementById("y_array").value+"]");
-        let z = combine(x,y);
+        
+        function doIt(){
+            let x = JSON.parse("["+document.getElementById("x_array").value+"]");
+            let y = JSON.parse("["+document.getElementById("y_array").value+"]");
+            let z = combine(x,y);
 
-        document.getElementById("demo").innerHTML = "The combined array is " + z;
+            document.getElementById("demo").innerHTML = "The combined array is " + z;
+        }
 
         function myFunction(total, value, index, array) {
         return total + value;
