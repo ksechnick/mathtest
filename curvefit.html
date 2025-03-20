@@ -7,23 +7,7 @@
 </head>
 
 <body>
-    <script type="module">
-        import {combine} from "./circletest.js";
-        //let x = [1,2,3,4];
-        //let y = [1,2,2,1];
-        
-        function doIt(){
-            let x = JSON.parse("["+document.getElementById("x_array").value+"]");
-            let y = JSON.parse("["+document.getElementById("y_array").value+"]");
-            let z = combine(x,y);
 
-            document.getElementById("demo").innerHTML = "The combined array is " + z;
-        }
-
-        function myFunction(total, value, index, array) {
-        return total + value;
-        }
-    </script>
     <h1>Circular curve fitting</h1>
 
     <p>combine two arrays array:</p>
@@ -40,10 +24,102 @@
         combine(JSON.parse("["+document.getElementById("x_array").value+"]"),JSON.parse("["+document.getElementById("y_array").value+"]"))}'>Combine4</button>
     <button onclick={doIt}>Combine5</button>
     <button onclick={doIt()}>Combine6</button>
+    <button id="combine7">Combine7</button>
+
 
     <p id="demo"></p>
 
 
+
+    <canvas id="graph"></canvas>
+
+    <script type="module">
+        //import {combine} from "./circletest.js";
+        //let x = [1,2,3,4];
+        //let y = [1,2,2,1];
+        
+        export const combine = function (x, y) {
+            let z = [];
+            for (let i = 0; i < x.length; i++){
+                z[i]=[x[i], y[i]]
+            };
+            return z;
+        }
+
+
+        function doIt(){
+            let x = JSON.parse("["+document.getElementById("x_array").value+"]");
+            let y = JSON.parse("["+document.getElementById("y_array").value+"]");
+            let combined = combine(x,y);
+
+            let result = "";
+            for (let index = 0; index < combined.length; index++) {
+                const element = combined[index];
+                if (index==0){
+                    result = "<br>";
+                }
+                result+="["+element[0]+","+element[1]+"]";
+                if (index == combined.length-1){
+                    result +="<br>";
+                }else {
+                    result +="<br>"
+                }
+
+            }
+
+            document.getElementById("demo").innerHTML = "The combined array is:" + result;
+            console.log(combined)
+        }
+
+        function myFunction(total, value, index, array) {
+        return total + value;
+        }
+
+        document.getElementById("combine7").addEventListener('click', doIt)
+
+        var scene = document.getElementById("graph");
+        var ctx = scene.getContext("2d");
+
+        scene.width = 500;
+        scene.height = 500;
+
+        var r = 125;
+        var g = 175;
+        var b = 150;
+
+        var theta = 0;
+
+        drawGrid(0,0,500,500,50,'rgb(0,0,0)', [200,210])
+
+        function drawGrid(x, y, width, height, gridCellSize, color, origin, lineWidth = 1) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = color;
+
+            for (var lx = x + (origin[0] % gridCellSize); lx <= x + width; lx +=gridCellSize){
+                ctx.moveTo(lx, y); 
+                ctx.lineTo(lx, y + height);}
+            for (var ly = y + height -(origin[1] % gridCellSize); ly >=y; ly -=gridCellSize) {
+                ctx.moveTo(x, ly);
+                ctx.lineTo(x + width, ly); 
+            }
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();
+            ctx.lineWidth = 7;
+            ctx.strokeStyle = 'green';
+            ctx.moveTo(0, 500-origin[1]);
+            ctx.lineTo(500, 500-origin[1]);
+            ctx.moveTo(origin[0],0);
+            ctx.lineTo(origin[0],500);
+            ctx.stroke();
+            ctx.restore();
+
+        }
+
+
+    </script>
 
 </body>
 
