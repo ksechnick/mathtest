@@ -12,8 +12,8 @@
 
     <p>combine two arrays array:</p>
 
-    <label for="x_array">X:</label><input id="x_array" name="x_array">
-    <label for="y_array">Y:</label><input id="y_array" name="y_array"><br>
+    <label for="x_array">X:</label><input id="x_array" name="x_array" value="10,20,30,40">
+    <label for="y_array">Y:</label><input id="y_array" name="y_array" value="20,30,40,50"><br>
     <button onclick="doIt()">Combine</button>
     <button
         onclick='document.getElementById("demo").innerHTML="The combined array is " +
@@ -46,20 +46,21 @@
             return z;
         }
 
-
+        let points =
+        combine(JSON.parse("["+document.getElementById("x_array").value+"]"),JSON.parse("["+document.getElementById("y_array").value+"]"));
         function doIt(){
             let x = JSON.parse("["+document.getElementById("x_array").value+"]");
             let y = JSON.parse("["+document.getElementById("y_array").value+"]");
-            let combined = combine(x,y);
+            points = combine(x,y);
 
             let result = "";
-            for (let index = 0; index < combined.length; index++) {
-                const element = combined[index];
+            for (let index = 0; index < points.length; index++) {
+                const element = points[index];
                 if (index==0){
                     result = "<br>";
                 }
                 result+="["+element[0]+","+element[1]+"]";
-                if (index == combined.length-1){
+                if (index == points.length-1){
                     result +="<br>";
                 }else {
                     result +="<br>"
@@ -68,7 +69,8 @@
             }
 
             document.getElementById("demo").innerHTML = "The combined array is:" + result;
-            console.log(combined)
+            console.log(points)
+            redraw();
         }
 
         function myFunction(total, value, index, array) {
@@ -82,14 +84,18 @@
 
         scene.width = 500;
         scene.height = 500;
+        const origin = [50,50];
+        function redraw(){
+            drawGrid(0,0,500,500,50,'rgb(0,0,0)', origin)
+            points.forEach((point)=> {
+                ctx.beginPath();
+                ctx.arc(origin[0]+point[0], scene.height-origin[1]-point[1], 6, 0, 2 * Math.PI);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                })
+        }
 
-        var r = 125;
-        var g = 175;
-        var b = 150;
 
-        var theta = 0;
-
-        drawGrid(0,0,500,500,50,'rgb(0,0,0)', [200,210])
 
         function drawGrid(x, y, width, height, gridCellSize, color, origin, lineWidth = 1) {
             ctx.save();
@@ -115,8 +121,8 @@
             ctx.lineTo(origin[0],500);
             ctx.stroke();
             ctx.restore();
-
         }
+
 
 
     </script>
