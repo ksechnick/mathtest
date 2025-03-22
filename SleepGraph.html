@@ -8,11 +8,33 @@
 
 <body>
 
+    <input type="file" id="fileInput" accept=".csv" />
+    <pre id="output2"></pre>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                Papa.parse(file, {
+                    header: true,
+                    complete: function (results) {
+                        document.getElementById('output2').innerText = JSON.stringify(results
+                            .data, null, 2);
+                        console.log(results.data);
+                    },
+                    error: function (error) {
+                        console.error('Error parsing CSV:', error);
+                    }
+                });
+            }
+        });
+    </script>
+
     <div>
         <canvas id="myChart"></canvas>
     </div>
 
-    <script src="./Chart.js"></script>
+    <script src="./chart.js"></script>
 
     <script>
         const ctx = document.getElementById('myChart');
