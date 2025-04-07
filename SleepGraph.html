@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Circular curve fitting</title>
+    <title>SleepGraph</title>
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
 </head>
 
@@ -10,7 +10,7 @@
 
     <input type="file" id="fileInput" accept=".csv" />
     <pre id="output2"></pre>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         document.getElementById('fileInput').addEventListener('change', function (event) {
             const file = event.target.files[0];
@@ -20,7 +20,11 @@
                     complete: function (results) {
                         document.getElementById('output2').innerText = JSON.stringify(results
                             .data, null, 2);
-                        console.log(results.data);
+                        const nights = processData(results.data);
+                        drawChart(nights);
+
+                        //console.log(results.data);
+                        console.log("done");
                     },
                     error: function (error) {
                         console.error('Error parsing CSV:', error);
@@ -28,6 +32,66 @@
                 });
             }
         });
+
+        function compareDates(date1, date2) {
+            date1 = new Date(date1).valueOf();
+            date2 = new Date(date2).valueOf();
+            if (date1 > date2) {
+                return 1;
+            } else if (date1 < date2) {
+                return -1;
+            } else if (date1 == date2) {
+                return 0;
+            } else {
+                console.error("invalid date comparison")
+                return "THROW ERROR";
+            }
+        }
+
+        function processData(data) {
+            const nights = [new Night()];
+            for (let index = 0; index < data.length; index++) {
+                let night = nights[nights.length - 1];
+                const session = data[index];
+                if (session.Date == '') {
+                    continue;
+                }
+                session.Start = new Date(session.Start);
+                session.End = new Date(session.End);
+                if (index == 0) {
+                    night.date = session.Date;
+                    night.startTime = session.Start;
+                }
+                // if (nights[nights.length].start == undefined) {
+                //     nights.startTime = session.Start;
+                //     nights.night = session.Date;
+
+                const dateComp = compareDates(session.Date, night.date);
+                if (dateComp == "THROW ERROR" | dateComp == -1) {
+                    console.error("invalid inputs, quitting processing", session, night, index)
+                    break;
+                } else if (dateComp == 1) {
+                    night = new Night();
+                    night.date = session.Date;
+                    night.startTime = session.Start;
+                    night.total = session["Total Time"];
+                    nights.push(night);
+                } else if (dateComp == 0) {
+                    night.total += session["Total Time"];
+                }
+
+                // TODO USE NIGHT EXPORT INSTEAD
+            }
+            return nights;
+        }
+
+        class Night {
+            date;
+            startTime;
+            wakeTime;
+            total;
+            sessions = []
+        }
     </script>
 
     <div>
@@ -38,6 +102,7 @@
 
     <script>
         const ctx = document.getElementById('myChart');
+        myVals = [12, 19, 3, 5, 2, 3];
 
         new Chart(ctx, {
             type: 'bar',
@@ -45,7 +110,7 @@
                 labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
                 datasets: [{
                     label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
+                    data: myVals,
                     borderWidth: 1
                 }]
             },
